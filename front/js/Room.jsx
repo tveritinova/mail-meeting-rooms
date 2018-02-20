@@ -1,12 +1,13 @@
 import React from "react";
 import { StyleSheet, css } from 'aphrodite';
-
+import {get_string_date} from "./date";
 
 export default class Room extends React.Component {
 
   found_next_free(events, ind) {
-  	console.log("found_next_free");
-  	console.log(events, ind);
+  	//console.log("found_next_free");
+  	//console.log(events, ind);
+  	
   	for (var i = ind + 1; i < events.length; i++) {
   		if (events[i-1]['end'].getTime() !== events[i]['start'].getTime()) {
   			return events[i-1]['end'];
@@ -16,26 +17,9 @@ export default class Room extends React.Component {
   	return events[events.length - 1]['end'];
   }
 
-  get_date(cur, time) {
-
-  	if (cur.getFullYear() === time.getFullYear()) {
-  		if ((cur.getDate() === time.getDate()) &&
-  			(cur.getMonth() === time.getMonth())) {
-  			return ''
-  		} else {
-  			return this.two_digit(time.getDate())+'.'+this.two_digit(time.getMonth())
-  		}
-  	} else {
-  		return this.two_digit(time.getDate())+'.'+this.two_digit(time.getMonth())+'.'+time.getFullYear() 
-  	}
-  	
-  }
-
-  two_digit(num) {
-  	return ("0" + num).slice(-2);
-  }
-
   render () {
+    console.log('room', this.props.name);
+
   	var cur = this.props.current;
   	var sorted_events = this.props.events;
 
@@ -54,7 +38,7 @@ export default class Room extends React.Component {
   	var next_time_free;
   	var next_time_closed
 
-  	//console.log('found', found);
+  	console.log('found', found);
 
   	if (found === undefined) {
   		if (sorted_events[sorted_events.length - 1]['end'] >= cur) {
@@ -78,6 +62,7 @@ export default class Room extends React.Component {
   				next_time_closed = sorted_events[found]['start'];
   			} else {
   				is_free = false;
+          console.log("here");
   				next_time_free = sorted_events[found-1]['end'];
   			}
   		}
@@ -93,11 +78,14 @@ export default class Room extends React.Component {
   		time  = next_time_closed;
   		style = css(styles.statusLabel, styles.statusFree);
   		if (time === undefined) {
-  			status =  <div className={style}>Свободно</div>
+  			status = 
+          <div className={style}>
+            Свободно
+          </div>
   		} else {
 	  		status = 
 	  		<div className={style}>
-	  			Свободно до {this.two_digit(time.getHours())}:{this.two_digit(time.getMinutes())} {this.get_date(cur, time)}
+	  			Свободно до {get_string_date(time, cur)}
 	  		</div>;
 	  	}
   	} else {
@@ -105,7 +93,7 @@ export default class Room extends React.Component {
   		style = css(styles.statusLabel, styles.statusBooked);
   		status = 
   		<div className={style}>
-  			Занято до {this.two_digit(time.getHours())}:{this.two_digit(time.getMinutes())} {this.get_date(cur, time)}
+  			Занято до {get_string_date(time, cur)}
   		</div>;
   	}
 
@@ -119,21 +107,31 @@ export default class Room extends React.Component {
 
 const styles = StyleSheet.create({
     cell: {
-        textAlign: 'center',
-        padding: '10 10 10 10'
+      textAlign: 'center',
+      padding: '5 5 5 5'
     },
     name: {
     	fontWeight: 'bold',
-    	marginBottom: 10
+    	marginBottom: 5,
+    	fontSize: '10pt'
     },
     statusLabel: {
     	borderRadius: '5px',
-    	margin: 'auto'
+    	fontSize: '8pt',
+      height: 30,
+      display: 'table-cell',
+      verticalAlign: 'middle',
+      width: '1%',
+      color: 'white'
     },
     statusFree: {
-    	backgroundColor: '#2ECC40'
+    	//backgroundColor: '#2ECC40'
+      //background: 'linear-gradient(-15deg, #11998e 0%, #38ef7d 100%)'
+      background: 'linear-gradient(-15deg, rgba(0,128,128,1) 0%, rgba(46,204,64,1) 100%)'
+      //background: 'linear-gradient(-15deg, #2ECC40 0%, #A9D16F 100%)'
     },
     statusBooked: {
-    	backgroundColor: '#FF4136'
+    	//backgroundColor: '#FF4136'
+      background: 'linear-gradient(top, #ea384d, #D31027)'
     },
 });

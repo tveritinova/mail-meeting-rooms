@@ -6,4 +6,4 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 @app.route('/')
 def index():
-    return render_template('/home/ubuntu/mail-meeting-rooms/front/index.html')
+    return render_template('index.html')

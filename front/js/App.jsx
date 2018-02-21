@@ -9,9 +9,6 @@ import {get_string_date} from "./date";
 import {rooms} from "./rooms_data.js";
 import Sticky from 'react-sticky-el';
 
-import "../node_modules/react-datetime/css/react-datetime.css";
-import "../node_modules/react-big-calendar/lib/css/react-big-calendar.css";
-
 BigCalendar.setLocalizer(BigCalendar.momentLocalizer(moment))
 
 var Datetime = require('react-datetime');

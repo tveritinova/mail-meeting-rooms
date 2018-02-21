@@ -27,7 +27,7 @@ const config = {
 	    {
 	      test: /\.css$/,
 	      loader: 'style!css',
-	      include: path.join(__dirname, 'node_modules')
+	      //include: path.join(__dirname, 'node_modules')
 	    }
 	  ],
 	}

@@ -2,8 +2,13 @@ from flask import Flask
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+import os
 
-app = Flask(__name__, template_folder="../front")
+template_dir = os.path.abspath('../front')
+
+raise Exception(template_dir)
+
+app = Flask(__name__, template_folder=template_dir)
 app.config.from_object(Config)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)

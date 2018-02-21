@@ -20,15 +20,6 @@ const config = {
 	      exclude: /node_modules/,
 	      use: 'babel-loader'
 	    },
-	    { 
-	      test: /\.css$/, 
-	      use: 'css-loader',
-	    },
-	    {
-	      test: /\.css$/,
-	      loader: 'style!css',
-	      //include: path.join(__dirname, 'node_modules')
-	    }
 	  ],
 	}
 };

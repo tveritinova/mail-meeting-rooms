@@ -21,8 +21,13 @@ const config = {
 	      use: 'babel-loader'
 	    },
 	    { 
-	      test: /\.css?/, 
-	      loader: "css-loader",
+	      test: /\.css$/, 
+	      use: 'css-loader',
+	    },
+	    {
+	      test: /\.css$/,
+	      loader: 'style!css',
+	      include: path.join(__dirname, 'node_modules')
 	    }
 	  ],
 	}

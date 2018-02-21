@@ -1,6 +1,8 @@
 import React from "react";
 import { StyleSheet, css } from 'aphrodite';
 
+require('../node_modules/react-datetime/css/react-datetime.css');
+
 var Datetime = require('react-datetime');
 
 export default class BookForm extends React.Component {

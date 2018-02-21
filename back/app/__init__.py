@@ -6,8 +6,6 @@ import os
 
 template_dir = os.path.abspath('../front')
 
-raise Exception(template_dir)
-
 app = Flask(__name__, template_folder=template_dir)
 app.config.from_object(Config)
 db = SQLAlchemy(app)

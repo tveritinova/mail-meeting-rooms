@@ -1,6 +1,6 @@
 from flask import render_template, request
 from app import app
-from app.models import User, Room, Event
+#from app.models import User, Room, Event
 import os
 
 basedir = os.path.abspath(os.path.dirname(__file__))

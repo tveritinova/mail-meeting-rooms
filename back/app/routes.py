@@ -35,4 +35,5 @@ def register():
 	print request.form 
 	print request.args
 	print request.data
+	print request.json
 	return '', 200

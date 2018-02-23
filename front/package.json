@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "aphrodite": "^1.2.5",
+    "axios": "^0.18.0",
     "moment": "^2.20.1",
     "password-hash": "^1.2.2",
     "react-big-calendar": "^0.18.0",

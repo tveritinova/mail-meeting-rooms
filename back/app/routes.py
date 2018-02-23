@@ -8,12 +8,12 @@ import json
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 
-'''
+
 @app.route('/')
 def index():
     return render_template('index.html')
 
-
+'''
 @app.route('/rooms', methods=['GET'])
 def get_rooms():
 	return Room.query.all()

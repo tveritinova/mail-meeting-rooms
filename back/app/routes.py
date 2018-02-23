@@ -36,7 +36,9 @@ def login():
 	print(user.password_hash)
 	print(data)
 
-	if user.password_hash != data['password']:
+	_, salt, password = user.password_hash.split('$')
+
+	if hashlib.sha1(salt.encode() + data['password'].encode()).hexdigest() != password:
 		return 'wrong password', 401
 
 	login_user(user)

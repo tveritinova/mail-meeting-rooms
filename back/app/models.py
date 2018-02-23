@@ -10,8 +10,6 @@ class User(db.Model):
 	confirmed = db.Column(db.Boolean, nullable=False, default=False)
 	confirmed_on = db.Column(db.DateTime, nullable=True)
 
-	events = db.relationship('Event', backref='user', lazy=True)
-
 	def is_active(self):
 		return True
 

@@ -5,6 +5,7 @@ import os
 from flask_cors import CORS, cross_origin
 import json
 from datetime import datetime
+from flask_login import login_user
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -23,10 +24,20 @@ def get_rooms():
 @app.route('/rooms', methods=['POST'])
 def post_rooms():
 	rooms = Room(name= , floor_num= )
-
-
-@app.route('/login', methods=['POST'])
 '''
+
+@app.route('/login', methods=['POST', 'GET'])
+def login():
+	data = json.loads(request.data)
+
+	user = User.query.filter(email=data['email'])
+
+	if user.password_hash != data['password']:
+		return 'wrong password', 401
+
+	login_user(user)
+
+	return 'authorized', 200
 
 
 @app.route('/users', methods=['POST'])

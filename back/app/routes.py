@@ -7,6 +7,8 @@ import json
 from datetime import datetime
 from flask_login import login_user
 import hashlib
+from passlib.hash import pbkdf2_sha256
+
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -34,14 +36,7 @@ def login():
 
 	user = User.query.filter(User.email == data['email']).one()
 
-	print(user.password_hash)
-	print(data)
-
-	print user.password_hash.split('$')
-
-	_, salt, _, password = user.password_hash.split('$')
-
-	if hashlib.sha1(salt.encode() + data['password'].encode()).hexdigest() != password:
+	if not pbkdf2_sha256.verify(data['password'], user.password_hash):
 		return 'wrong password', 401
 
 	login_user(user)
@@ -56,7 +51,7 @@ def register():
 	print data
 	db.session.add(User(
 		email=data['email'], 
-		password_hash=data['password'],
+		password_hash=pbkdf2_sha256.encrypt(data['password']),
 		first_name=data['first_name'],
 		last_name=data['last_name'],
 		registered_on=datetime.now()))

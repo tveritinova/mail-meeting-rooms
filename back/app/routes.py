@@ -35,8 +35,8 @@ def register():
 	print '~~~~~~~~'
 	print request.form 
 	print request.args
-	print request.data
+	#print request.data
 	print request.is_json
 	print request.accept_mimetypes
-	#print request.get_json()
+	print request.get_json()
 	return '', 200

@@ -31,5 +31,7 @@ def post_rooms():
 @cross_origin()
 def register():
 	print "here"
-	#print request.get_json(force=True)
+	print request.form 
+	print request.values
+	print request.args
 	return '', 200

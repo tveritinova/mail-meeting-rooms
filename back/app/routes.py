@@ -33,6 +33,9 @@ def login():
 
 	user = User.query.filter(User.email == data['email']).one()
 
+	print(user.password_hash)
+	print(data)
+
 	if user.password_hash != data['password']:
 		return 'wrong password', 401
 

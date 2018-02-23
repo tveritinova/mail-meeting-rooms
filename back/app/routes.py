@@ -30,4 +30,5 @@ def post_rooms():
 @app.route('/users', methods=['POST'])
 @cross_origin()
 def register():
-	print request.form
+	print request
+	return 200, ''

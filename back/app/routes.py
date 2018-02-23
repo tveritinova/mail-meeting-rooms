@@ -29,7 +29,7 @@ def post_rooms():
 
 
 @app.route('/users', methods=['POST'])
-@cross_origin(headers=['Content- Type'])
+@cross_origin(origin='localhost', headers=['Content- Type'])
 def register():
 	print request.headers
 	print request.form 

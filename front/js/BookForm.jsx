@@ -8,7 +8,7 @@ export default class BookForm extends React.Component {
 	constructor(props) {
     	super(props);
     	this.state = {
-    		titke: '',
+    		title: '',
     		desc: '',
     		startTime: this.props.defaultTime,
     		endTime: this.props.defaultTime,
@@ -76,8 +76,8 @@ export default class BookForm extends React.Component {
 
 			<input 
 				type="text" 
-				value={this.state.value} 
-				onChange={this.handleChange} 
+				value={this.state.title} 
+				onChange={this.handleChangeTitle} 
 				placeholder={"Название"}
 				style={{padding: 5, width: '100%', margin: 'auto', borderRadius: '.25rem', border: '1px solid #DDDDDD'}}
 			/>

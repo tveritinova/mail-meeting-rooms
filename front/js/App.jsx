@@ -8,6 +8,8 @@ import moment from 'moment';
 import {get_string_date} from "./date";
 import {rooms} from "./rooms_data.js";
 import Sticky from 'react-sticky-el';
+import Modal from 'react-overlays/lib/Modal';
+import LoginForm from './LoginForm';
 
 
 BigCalendar.setLocalizer(BigCalendar.momentLocalizer(moment))
@@ -26,6 +28,7 @@ export default class App extends React.Component {
       rooms: undefined,
       floors: undefined,
       book: false,
+      showLogin: false
     };
     this.handleChangeCheckbox = this.handleChangeCheckbox.bind(this);
     this.handleChangeTime = this.handleChangeTime.bind(this);
@@ -199,12 +202,53 @@ export default class App extends React.Component {
         </div> 
     }
 
+    const modalStyle = {
+      position: 'fixed',
+      zIndex: 1040,
+      top: 0, bottom: 0, left: 0, right: 0,
+    };
+
+    const backdropStyle = {
+      position: 'fixed',
+      zIndex: 1040,
+      top: 0, bottom: 0, left: 0, right: 0,
+      zIndex: 'auto',
+      backgroundColor: '#000',
+      opacity: 0.5
+    };
+
+    const dialogStyle = {
+      position: 'absolute',
+      width: 400,
+      top: 50 + '%', left: 50 + '%',
+      transform: `translate(-${50}%, -${50}%)`,
+      border: '1px solid #e5e5e5',
+      backgroundColor: 'white',
+      boxShadow: '0 5px 15px rgba(0,0,0,.5)',
+      padding: 20,
+      borderRadius: '10px'
+    };
+
     return (
 
       <div className={css(styles.body)}>
 
         <div className={css(styles.header)}>
-         Забронируй переговорку!!!! пожалуйста
+          <button onClick={()=>this.setState({showLogin: true})}>Войти</button>
+
+          <Modal 
+            show={this.state.showLogin}
+            onHide={() => this.setState({showLogin: false})}
+            style={modalStyle}
+            backdropStyle={backdropStyle}
+          >
+
+            <div style={dialogStyle}>
+              <LoginForm/>
+            </div>
+
+          </Modal>
+
         </div>
 
       	<div className={css(styles.mainContainer)}>

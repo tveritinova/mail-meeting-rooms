@@ -3,6 +3,7 @@ from app import app
 #from app.models import User, Room, Event
 import os
 from flask_cors import CORS, cross_origin
+import json
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -34,5 +35,5 @@ def register():
 	print request.form 
 	print request.values
 	print request.args
-	print request.get_json()
+	print json.loads(request.data)
 	return '', 200

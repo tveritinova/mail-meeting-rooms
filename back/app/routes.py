@@ -31,7 +31,7 @@ def post_rooms():
 def login():
 	data = json.loads(request.data)
 
-	user = User.query.filter(email=data['email'])
+	user = User.query.filter(User.email == data['email']).one()
 
 	if user.password_hash != data['password']:
 		return 'wrong password', 401

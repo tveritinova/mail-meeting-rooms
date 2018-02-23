@@ -36,4 +36,5 @@ def register():
 	print request.args
 	print type(request.data)
 	print request.is_json
+	print request.get_json()
 	return '', 200

@@ -4,6 +4,7 @@ from app.models import User, Room, Event
 import os
 from flask_cors import CORS, cross_origin
 import json
+from datetime import datetime
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -33,7 +34,10 @@ def post_rooms():
 def register():
 	data = json.loads(request.data)
 	print data
-	db.session.add(User(email=data['email'], password_hash=data['password']))
+	db.session.add(User(
+		email=data['email'], 
+		password_hash=data['password'],
+		registered_on=datetime.now()))
 	db.session.commit()
 
 	return '', 200

@@ -1,6 +1,6 @@
 from flask import render_template, request
-from app import app
-#from app.models import User, Room, Event
+from app import app, db
+from app.models import User, Room, Event
 import os
 from flask_cors import CORS, cross_origin
 import json
@@ -31,5 +31,9 @@ def post_rooms():
 @app.route('/users', methods=['POST'])
 @cross_origin()
 def register():
-	print json.loads(request.data)
+	data = json.loads(request.data)
+	print data
+	db.session.add(User(email=data['email'], passwordHash=data['password']))
+	db.session.commit()
+
 	return '', 200

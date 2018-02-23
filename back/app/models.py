@@ -5,7 +5,6 @@ class User(db.Model):
 	__tablename__ = "users"
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(128))
     registered_on = db.Column(db.DateTime, nullable=False)
@@ -14,6 +13,18 @@ class User(db.Model):
     confirmed_on = db.Column(db.DateTime, nullable=True)
 
     events = db.relationship('Event', backref='user', lazy=True)
+
+    def is_active(self):
+    	return True
+
+    def get_id(self):
+    	return self.id
+
+    def is_authenticated(self):
+    	return self.authenticated
+
+    def is_anonymous(self):
+        return False
 
 
 class Room(db.Model):

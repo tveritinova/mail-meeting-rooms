@@ -33,7 +33,7 @@ def post_rooms():
 def register():
 	print request.headers
 	print request.form 
-	print request.form.keys() 
 	print request.args
-	print request.data
+	print str(request.data)
+	print request.data.get("email")
 	return '', 200

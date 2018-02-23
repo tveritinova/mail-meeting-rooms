@@ -37,6 +37,8 @@ def register():
 	db.session.add(User(
 		email=data['email'], 
 		password_hash=data['password'],
+		first_name=data['first_name'],
+		last_name=data['last_name'],
 		registered_on=datetime.now()))
 	db.session.commit()
 

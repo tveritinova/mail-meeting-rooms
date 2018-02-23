@@ -31,12 +31,5 @@ def post_rooms():
 @app.route('/users', methods=['POST'])
 @cross_origin()
 def register():
-	print request.headers
-	print '~~~~~~~~'
-	print request.form 
-	print request.args
-	print request.data
-	print request.is_json
-	print request.accept_mimetypes
-	#print request.get_json()
+	print json.load(request.data)
 	return '', 200

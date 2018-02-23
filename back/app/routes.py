@@ -6,6 +6,7 @@ from flask_cors import CORS, cross_origin
 import json
 from datetime import datetime
 from flask_login import login_user
+import hashlib
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 

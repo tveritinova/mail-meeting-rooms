@@ -42,5 +42,5 @@ class Event(db.Model):
 	description = db.Column(db.String(300))
 	begin = db.Column(db.DateTime()) 
 	end = db.Column(db.DateTime()) 
-	room_id = db.Column(db.Integer, db.ForeignKey('room.id'), nullable=False) 
-	user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+	room_id = db.Column(db.Integer, db.ForeignKey('rooms.id'), nullable=False) 
+	user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)

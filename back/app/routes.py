@@ -27,6 +27,7 @@ def post_rooms():
 '''
 
 @app.route('/login', methods=['POST', 'GET'])
+@cross_origin()
 def login():
 	data = json.loads(request.data)
 

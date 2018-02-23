@@ -34,6 +34,5 @@ def register():
 	print request.headers
 	print request.form 
 	print request.args
-	print str(request.data)
-	print request.data.get("email")
+	print type(request.data)
 	return '', 200

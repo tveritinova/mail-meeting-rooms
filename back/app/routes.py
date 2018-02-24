@@ -87,7 +87,7 @@ def register():
 	db.session.add(user)
 	db.session.commit()
 
-	return '', 200
+	return 'user created', 201
 
 
 @app.route('/confirm/<token>')

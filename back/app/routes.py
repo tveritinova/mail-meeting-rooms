@@ -21,6 +21,7 @@ def requires_auth(f):
 	@wraps(f)
 	def decorated(*args, **kwargs):
 		print request.authorization
+		print request.headers
 		token=''
 		user = User.verify_auth_token(token)
 		

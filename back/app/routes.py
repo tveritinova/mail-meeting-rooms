@@ -6,7 +6,6 @@ from flask_cors import CORS, cross_origin
 import json
 from datetime import datetime
 from flask_login import login_user
-import hashlib
 from passlib.hash import pbkdf2_sha256
 # from token_ import generate_confirmation_token, confirm_token
 

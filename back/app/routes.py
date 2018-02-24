@@ -48,7 +48,7 @@ def post_rooms():
 
 
 @app.route('/events', methods=['POST'])
-@login_required()
+@login_required
 @cross_origin()
 def post_event():
 	data = json.loads(request.data)

@@ -22,7 +22,7 @@ def requires_auth(f):
 	def decorated(*args, **kwargs):
 		print request.authorization
 		print request.headers
-		print json.loads(request.data)
+		print request.data
 		token=''
 		user = User.verify_auth_token(token)
 		

@@ -10,6 +10,7 @@ from passlib.hash import pbkdf2_sha256
 from token_ import generate_confirmation_token, confirm_token
 from flask.ext.mail import Message
 from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy import exists 
 
 
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -65,6 +66,9 @@ def send_email(to, confirm_url):
 @cross_origin()
 def register():
 	data = json.loads(request.data)
+
+	print User.query(exists().where(User.email == data['email']))
+
 	user = User(
 		email=data['email'], 
 		password_hash=pbkdf2_sha256.encrypt(data['password']),

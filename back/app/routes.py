@@ -8,7 +8,7 @@ from datetime import datetime
 from flask_login import login_user
 import hashlib
 from passlib.hash import pbkdf2_sha256
-from token import generate_confirmation_token, confirm_token
+from token_ import generate_confirmation_token, confirm_token
 
 
 basedir = os.path.abspath(os.path.dirname(__file__))

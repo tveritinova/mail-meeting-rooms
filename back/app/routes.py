@@ -64,12 +64,15 @@ def register():
 		first_name=data['first_name'],
 		last_name=data['last_name'],
 		registered_on=datetime.now())
+	
+
+	token = generate_confirmation_token(user.email)
+	confirm_url = url_for('confirm', token=token, _external=True)
+	send_email(user.email, confirm_url)
+
 	db.session.add(user)
 	db.session.commit()
 
-	token = generate_confirmation_token(user.email)
-	confirm_url = url_for('user.confirm_email', token=token, _external=True)
-	send_email(user.email, confirm_url)
 	return '', 200
 
 

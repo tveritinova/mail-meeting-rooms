@@ -70,7 +70,7 @@ def register():
 	if User.query.filter(User.email == data['email']).scalar() is not None:
 		return 'user already exists', 400
 
-	print data['first_name']
+	print data['first_name'].encode('utf8')
 
 	user = User(
 		email=data['email'], 

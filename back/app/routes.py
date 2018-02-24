@@ -26,7 +26,7 @@ def index():
 @cross_origin()
 def get_rooms():
 	return json.dumps([{
-		"id": room.id
+		"id": room.id,
 		"name": room.name, 
 		"floor_num": room.floor_num,
 		"events": [

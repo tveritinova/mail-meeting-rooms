@@ -23,6 +23,7 @@ def index():
 
 
 @app.route('/rooms', methods=['GET'])
+@cross_origin()
 def get_rooms():
 	return Room.query.all()
 

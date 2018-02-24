@@ -9,6 +9,7 @@ from flask_login import login_user
 from passlib.hash import pbkdf2_sha256
 from token_ import generate_confirmation_token, confirm_token
 from flask.ext.mail import Message
+from sqlalchemy.orm.exc import NoResultFound
 
 
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -35,10 +36,16 @@ def post_rooms():
 def login():
 	data = json.loads(request.data)
 
-	user = User.query.filter(User.email == data['email']).one()
+	try:
+		user = User.query.filter(User.email == data['email']).one()
+	except NoResultFound:
+		return 'no user', 401
 
 	if not pbkdf2_sha256.verify(data['password'], user.password_hash):
 		return 'wrong password', 401
+
+	if not user.confirmed:
+		return 'not confirmed', 401
 
 	login_user(user)
 

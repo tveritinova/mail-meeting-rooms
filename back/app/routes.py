@@ -20,7 +20,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 def requires_auth(f):
 	@wraps(f)
 	def decorated(*args, **kwargs):
-		print 'header', request.headers['Authorization']
+		print request.headers
 		token=''
 		user = User.verify_auth_token(token)
 		

@@ -20,7 +20,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 @app.route('/')
 def index():
 	print "HERE 2", g
-    return render_template('index.html')
+	return render_template('index.html')
 
 
 @app.route('/rooms', methods=['GET'])

@@ -1,11 +1,10 @@
-from flask import render_template, request, url_for, g
+from flask import render_template, request, url_for
 from app import app, db, mail
 from app.models import User, Room, Event
 import os
 from flask_cors import CORS, cross_origin
 import json
 from datetime import datetime
-from flask_login import login_user, login_required, current_user
 from passlib.hash import pbkdf2_sha256
 from token_ import generate_confirmation_token, confirm_token
 from flask.ext.mail import Message
@@ -13,22 +12,32 @@ from sqlalchemy.orm.exc import NoResultFound
 from smtplib import SMTPRecipientsRefused
 
 
+
 basedir = os.path.abspath(os.path.dirname(__file__))
 
+
+def requires_auth(f):
+	@wraps(f)
+	def decorated(*args, **kwargs):
+		print 'header', request.headers['Authorization']
+		token=''
+		user = User.verify_auth_token(token)
+		
+		if user is None:
+			return 'not authorized', 401
+		return f(*args, **kwargs)
+	return decorated
 
 
 @app.route('/')
 def index():
-	print "HERE 2", g
 	return render_template('index.html')
 
 
 @app.route('/rooms', methods=['GET'])
+@requires_auth
 @cross_origin()
 def get_rooms():
-
-	print "HERE 1", g
-
 	return json.dumps([{
 		"id": room.id,
 		"name": room.name, 
@@ -52,7 +61,7 @@ def post_rooms():
 
 
 @app.route('/events', methods=['POST'])
-@login_required
+@requires_auth
 @cross_origin()
 def post_event():
 	data = json.loads(request.data)
@@ -63,7 +72,7 @@ def post_event():
 			begin=datetime(data['begin']),
 			end=datetime(data['end']),
 			room_id=data['room_id'],
-			user_id=current_user.id
+			user_id=user.id
 		)
 
 	db.session.add(event)
@@ -88,9 +97,12 @@ def login():
 	if not user.confirmed:
 		return 'not confirmed', 401
 
-	login_user(user)
-
-	return json.dumps({'id': user.id, 'first_name': user.first_name, 'last_name': user.last_name}), 200
+	return json.dumps({
+		'id': user.id, 
+		'first_name': user.first_name, 
+		'last_name': user.last_name,
+		'token': user.generate_auth_token()
+	}), 200
 
 def send_email(to, confirm_url):
     msg = Message(

@@ -70,11 +70,13 @@ def register():
 	if User.query.filter(User.email == data['email']).scalar() is not None:
 		return 'user already exists', 400
 
+	print data['first_name']
+
 	user = User(
 		email=data['email'], 
 		password_hash=pbkdf2_sha256.encrypt(data['password']),
-		first_name=data['first_name'].decode('unicode_escape'),
-		last_name=data['last_name'].decode('unicode_escape'),
+		first_name=data['first_name'],
+		last_name=data['last_name'],
 		registered_on=datetime.now())
 
 	try:

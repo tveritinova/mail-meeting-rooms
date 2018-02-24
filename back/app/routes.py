@@ -25,7 +25,7 @@ def index():
 @app.route('/rooms', methods=['GET'])
 @cross_origin()
 def get_rooms():
-	return json.dumps(Room.query.all()), 200
+	return json.dumps([{"name": room.name, "floor_num": room.floor_num} for room in Room.query.all()]), 200
 
 '''
 @app.route('/rooms', methods=['POST'])

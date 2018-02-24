@@ -9,4 +9,4 @@ class Config(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     CORS_HEADERS = 'Content-Type'
     DEBUG = True
-    SECURITY_PASSWORD_SALT = 'my_precious_two'
+    #SECURITY_PASSWORD_SALT = 'my_precious_two'

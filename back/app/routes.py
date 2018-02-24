@@ -8,7 +8,7 @@ from datetime import datetime
 from flask_login import login_user
 import hashlib
 from passlib.hash import pbkdf2_sha256
-from token_ import generate_confirmation_token, confirm_token
+# from token_ import generate_confirmation_token, confirm_token
 
 
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -58,10 +58,11 @@ def register():
 		registered_on=datetime.now()))
 	db.session.commit()
 
-	token = generate_confirmation_token(user.email)
+	#token = generate_confirmation_token(user.email)
 
 	return '', 200
 
+'''
 @app.route('/confirm/<token>')
 def confirm(token):
     email = confirm_token(token)
@@ -70,4 +71,5 @@ def confirm(token):
     user.confirmed_on = datetime.now()
     db.session.commit()
     return redirect(url_for('home'))
+'''
 

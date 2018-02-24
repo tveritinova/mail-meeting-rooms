@@ -69,8 +69,7 @@ def register():
 
 	token = generate_confirmation_token(user.email)
 	confirm_url = url_for('user.confirm_email', token=token, _external=True)
-    send_email(user.email, confirm_url)
-
+	send_email(user.email, confirm_url)
 	return '', 200
 
 

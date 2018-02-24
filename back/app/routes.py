@@ -10,6 +10,7 @@ from token_ import generate_confirmation_token, confirm_token
 from flask.ext.mail import Message
 from sqlalchemy.orm.exc import NoResultFound
 from smtplib import SMTPRecipientsRefused
+from functools import wraps
 
 
 

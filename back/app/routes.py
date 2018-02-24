@@ -1,5 +1,5 @@
 from flask import render_template, request, url_for
-from app import app, db
+from app import app, db, mail
 from app.models import User, Room, Event
 import os
 from flask_cors import CORS, cross_origin

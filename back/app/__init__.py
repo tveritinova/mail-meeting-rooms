@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 import os
 from flask_login import LoginManager
+from flask_mail import Mail
 
 template_dir = os.path.abspath('../front')
 static_dir = os.path.abspath('../front')
@@ -14,6 +15,8 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 login_manager = LoginManager()
 login_manager.init_app(app)
+
+mail = Mail(app)
 
 from app import routes, models
 from models import User

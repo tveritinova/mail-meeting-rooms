@@ -5,7 +5,7 @@ import os
 from flask_cors import CORS, cross_origin
 import json
 from datetime import datetime
-from flask_login import login_user
+from flask_login import login_user, login_required, current_user
 from passlib.hash import pbkdf2_sha256
 from token_ import generate_confirmation_token, confirm_token
 from flask.ext.mail import Message
@@ -45,6 +45,28 @@ def get_rooms():
 def post_rooms():
 	rooms = Room(name= , floor_num= )
 '''
+
+
+@app.route('/events', methods=['POST'])
+@login_required()
+@cross_origin()
+def post_event():
+	data = json.loads(request.data)
+
+	event = Event(
+			title=data['title'],
+			description=data['description'],
+			begin=datetime(data['begin']),
+			end=datetime(data['end']),
+			room_id=data['room_id'],
+			user_id=current_user.id
+		)
+
+	db.session.add(event)
+	db.session.commit()
+
+	return 'success', 201
+
 
 @app.route('/login', methods=['POST', 'GET'])
 @cross_origin()

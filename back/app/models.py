@@ -46,3 +46,5 @@ class Event(db.Model):
 	end = db.Column(db.DateTime()) 
 	room_id = db.Column(db.Integer, db.ForeignKey('rooms.id'), nullable=False) 
 	user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+
+	

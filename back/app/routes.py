@@ -73,8 +73,8 @@ def register():
 	user = User(
 		email=data['email'], 
 		password_hash=pbkdf2_sha256.encrypt(data['password']),
-		first_name=data['first_name'].decode('utf-8'),
-		last_name=data['last_name'].decode('utf-8'),
+		first_name=data['first_name'].decode('unicode_escape'),
+		last_name=data['last_name'].decode('unicode_escape'),
 		registered_on=datetime.now())
 
 	try:

@@ -48,7 +48,7 @@ def send_email(to, confirm_url):
     msg = Message(
         "Please confirm your email",
         recipients=[to],
-        html="<a href="+confirm_url+">Подтвердить</a>",
+        html="<a href="+confirm_url+">Confirm</a>",
         sender=app.config['MAIL_DEFAULT_SENDER']
     )
     mail.send(msg)

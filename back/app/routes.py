@@ -10,6 +10,7 @@ from passlib.hash import pbkdf2_sha256
 from token_ import generate_confirmation_token, confirm_token
 from flask.ext.mail import Message
 from sqlalchemy.orm.exc import NoResultFound
+from smtplib import SMTPRecipientsRefused
 
 
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -66,7 +67,8 @@ def send_email(to, confirm_url):
 def register():
 	data = json.loads(request.data)
 
-	print User.query.filter(User.email == data['email']).scalar()
+	if User.query.filter(User.email == data['email']).scalar() is not None:
+		return 'user already exists', 400
 
 	user = User(
 		email=data['email'], 
@@ -74,11 +76,13 @@ def register():
 		first_name=data['first_name'],
 		last_name=data['last_name'],
 		registered_on=datetime.now())
-	
 
-	token = generate_confirmation_token(user.email)
-	confirm_url = url_for('confirm', token=token, _external=True)
-	send_email(user.email, confirm_url)
+	try:
+		token = generate_confirmation_token(user.email)
+		confirm_url = url_for('confirm', token=token, _external=True)
+		send_email(user.email, confirm_url)
+	except SMTPRecipientsRefused:
+		return 'email invalid', 400
 
 	db.session.add(user)
 	db.session.commit()

@@ -1,4 +1,4 @@
-from flask import render_template, request, url_for
+from flask import render_template, request, url_for, g
 from app import app, db, mail
 from app.models import User, Room, Event
 import os
@@ -19,12 +19,18 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 @app.route('/')
 def index():
+
+	print "HERE 2", g
+
     return render_template('index.html')
 
 
 @app.route('/rooms', methods=['GET'])
 @cross_origin()
 def get_rooms():
+
+	print "HERE 1", g
+
 	return json.dumps([{
 		"id": room.id,
 		"name": room.name, 

@@ -10,7 +10,8 @@ from datetime import datetime
 from passlib.hash import pbkdf2_sha256
 from token_ import generate_confirmation_token, confirm_token
 from flask.ext.mail import Message
-from sqlalchemy.orm.exc import NoResultFound, IntegrityError
+from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy.exc import IntegrityError
 from smtplib import SMTPRecipientsRefused
 from functools import wraps
 from dateutil.parser import parse

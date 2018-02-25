@@ -22,6 +22,10 @@ const config = {
 	      exclude: /node_modules/,
 	      use: 'babel-loader'
 	    },
+	    {
+  		  test: /\.(ico|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2)(\?.*)?$/,
+ 		  loader: 'file-loader',
+ 		}
 	  ],
 	},
 	plugins: [

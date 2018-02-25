@@ -10,6 +10,9 @@ export default class FloorsTable extends React.Component {
 	}
 
 	render() {
+
+		console.log('ROOMS', this.props.rooms)
+
 		return(
 			<div className={css(styles.floorsContainer)}>
 	    		{ this.props.floors.map((floor_num, i) =>

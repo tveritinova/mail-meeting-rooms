@@ -1,8 +1,8 @@
 import React from "react";
 import { StyleSheet, css } from 'aphrodite';
-import axios from 'axios';
 
-var passwordHash = require('password-hash');
+
+var qs = require('qs');
 
 export default class LoginForm extends React.Component {
 
@@ -11,39 +11,61 @@ export default class LoginForm extends React.Component {
     	this.state = {
     		email: '',
     		password: '',
-    		remember: false,
-    		api: axios.create({
-				baseURL: 'http://34.216.197.100',
-				timeout: 10000,
-				transformRequest: [(data) => data],
-				headers: {
-					'Accept': 'application/json,*/*',
-					'Content-Type': 'application/json',
-				}
-	    	})
+    		//remember: false,
+    		redirect: false,
+    		message: ''
     	};
 
     	this.handleChangeEmail = this.handleChangeEmail.bind(this);
     	this.handleChangePassword = this.handleChangePassword.bind(this);
-    	this.handleChangeRemember = this.handleChangeRemember.bind(this);
+    	//this.handleChangeRemember = this.handleChangeRemember.bind(this);
     	this.handleLogin = this.handleLogin.bind(this);
     }
 
+
+
     handleLogin() {
-    	console.log(this.state);
-    	console.log(passwordHash.generate(this.state.password));
-    	this.state.api.post('/users',
-    	{
-    		//email: this.state.email,
-    		//password: passwordHash.generate(this.state.password)
-    		hello: 'there'
-    	})
-    	.then(function (response) {
-			console.log(response);
-		})
-		.catch(function (error) {
-			console.log(error);
-		});
+    	this.props.api.post('/login',
+    	JSON.stringify({
+    		email: this.state.email,
+    		password: this.state.password
+		}))
+		.then((function (response) {
+	    	console.log(response);
+
+	    	console.log('func', this.props.set_user);
+
+			if (response.status == 200) {
+				console.log(response.data);
+				this.props.set_user(
+					response.data.first_name,
+					response.data.last_name,
+					response.data.id,
+					response.data.token
+				);
+
+				localStorage.setItem('token_auth', response.data.token);
+
+				this.props.redirect();
+			}
+	    }).bind(this))
+		.catch((function (error) {
+			console.log(error.response);
+
+			if (error.response.status === 401) {
+				if (error.response.data === "wrong password") {
+					this.setState({message: "Неверный пароль"});
+				}
+
+				if (error.response.data === "no user") {
+					this.setState({message: "Почта задана неверно"});
+				}
+
+				if (error.response.data === "not confirmed") {
+					this.setState({message: "Необходимо подтверждение регистрации"});
+				}
+			}
+		}).bind(this));
 	}
 
 	handleChangeEmail(event) {
@@ -56,13 +78,15 @@ export default class LoginForm extends React.Component {
 		});
 	}
 
-	handleChangeRemember(event) {
+	/*handleChangeRemember(event) {
 		this.setState({remember: !this.state.remember});
-	}
+	}*/
 
 	render() {
 		return (
+
 			<div className={css(styles.formContainer)}>
+			
 				<input
 					type="text"
 					placeholder={"Эл. почта"}
@@ -79,10 +103,14 @@ export default class LoginForm extends React.Component {
 					onChange={this.handleChangePassword}
 				/>
 
-				<input
-    				type="checkbox" 
-    				onChange={this.handleChangeRemember} 
-    				defaultChecked={this.state.remember}/> 
+    			<button
+    				onClick={this.props.register}
+    				className={css(styles.register)}
+    			>
+    				Регистрация
+    			</button>
+
+    			<div style={{height: 20, color: 'red', marginTop: 10}}>{this.state.message}</div>
 
 				<button
 					className={css(styles.loginButton)}
@@ -91,6 +119,7 @@ export default class LoginForm extends React.Component {
 					Войти
 				</button>
 			</div>
+			
 		)
 	}
 }
@@ -105,14 +134,27 @@ var styles = StyleSheet.create({
 	input: {
 		margin: 10,
 		width: '85%',
-		fontSize: '12pt'
+		fontSize: '10pt',
+		padding: 5, 
+		borderRadius: '.25rem', 
+		border: '1px solid #DDDDDD'
 	},
 	loginButton: {
 		backgroundColor: '#06397d',
 		color: 'white',
-		margin: 20,
+		marginTop: 10,
 		width: '30%',
 		height: 30,
-		fontSize: '12pt'
+		fontSize: '12pt',
+		borderRadius: '5px'
+	},
+	register: {
+		fontSize: '10pt', 
+		borderBottom: '1px dashed #BBBBBB !important',
+		padding: 0,
+		':hover': {
+			borderBottom: '1px dashed black !important',
+		},
+		marginTop: 5
 	}
 });

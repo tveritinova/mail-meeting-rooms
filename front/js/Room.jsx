@@ -9,26 +9,27 @@ export default class Room extends React.Component {
   	//console.log(events, ind);
   	
   	for (var i = ind + 1; i < events.length; i++) {
-  		if (events[i-1]['end'].getTime() !== events[i]['start'].getTime()) {
-  			return events[i-1]['end'];
+  		if (events[i-1].end.getTime() !== events[i].start.getTime()) {
+  			return events[i-1].end;
   		}
   	}
 
-  	return events[events.length - 1]['end'];
+  	return events[events.length - 1].end;
   }
 
   render () {
     console.log('room', this.props.name);
 
+
   	var cur = this.props.current;
   	var sorted_events = this.props.events;
 
   	console.log('cur', cur);
-  	//console.log('events', sorted_events);
+  	console.log('events', sorted_events);
 
   	var found;
   	for (var i = 0; i < sorted_events.length; i++) {
-  		if (sorted_events[i]['start'] >= cur) {
+  		if (sorted_events[i].start >= cur) {
   			found = i;
   			break;
   		}
@@ -41,29 +42,35 @@ export default class Room extends React.Component {
   	console.log('found', found);
 
   	if (found === undefined) {
-  		if (sorted_events[sorted_events.length - 1]['end'] >= cur) {
-  			is_free = false;
-  			next_time_free = sorted_events[sorted_events.length - 1]['end'];
-  		} else {
-  			is_free = true;
-  		}
+
+      if (this.props.events.length === 0) {
+        is_free = true;
+      } else {
+
+    		if (sorted_events[sorted_events.length - 1].end >= cur) {
+    			is_free = false;
+    			next_time_free = sorted_events[sorted_events.length - 1].end;
+    		} else {
+    			is_free = true;
+    		}
+      }
 
   	} else {
   		//console.log(cur, sorted_events[found]['start'], cur == sorted_events[found]['start']);
-  		if (cur.getTime() === sorted_events[found]['start'].getTime()) {
+  		if (cur.getTime() === sorted_events[found].start.getTime()) {
   			is_free = false;
   			next_time_free = this.found_next_free(sorted_events, found);
   			//console.log("eq start");
   		} else {
   			//console.assert(cur < sorted_events[found]['start']);
 
-  			if ((found == 0) || (cur >= sorted_events[found-1]['end'])) {
+  			if ((found == 0) || (cur >= sorted_events[found-1].end)) {
   				is_free = true;
-  				next_time_closed = sorted_events[found]['start'];
+  				next_time_closed = sorted_events[found].start;
   			} else {
   				is_free = false;
           console.log("here");
-  				next_time_free = sorted_events[found-1]['end'];
+  				next_time_free = sorted_events[found-1].end;
   			}
   		}
   	}

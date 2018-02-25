@@ -76,7 +76,7 @@ def send_info_mail(to, event):
         	"<b>Начало</b> "+str(event.begin)+"<br/>"+\
         	"<b>Конец</b> "+str(event.end)+"<br/>"+\
         	"<b>Название</b> "+str(event.title)+"<br/>"+\
-        	"<b>Описание</b> "+str(event.description)
+        	"<b>Описание</b> "+str(event.description),
         sender=app.config['MAIL_DEFAULT_SENDER']
     )
     mail.send(msg)

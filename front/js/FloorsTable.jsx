@@ -6,7 +6,7 @@ import Room from "./Room";
 export default class FloorsTable extends React.Component {
 
 	get_rooms_for_floor(floor_num) {
-		return this.props.rooms.filter((room) => room.floor_num === floor_num).sort((a,b) => a.id <= b.id);
+		return this.props.rooms.filter((room) => room.floor_num === floor_num).sort((a,b) => a.id - b.id);
 	}
 
 	render() {

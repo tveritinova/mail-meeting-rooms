@@ -83,7 +83,7 @@ def post_rooms(user):
 		room = Room(name=data["name"], floor_num=data["floor_num"])
 		db.session.add(room)
 		db.session.commit()
-		return 'success', 200
+		return 'success', 201
 	else:
 		return 'user not admin', 403
 
@@ -94,6 +94,7 @@ def post_rooms(user):
 @cross_origin()
 @requires_auth
 def delete_room(room_id, user):
+	print room_id, user
 	if user.admin == True:
 		Room.query.filter(Room.id == room_id).delete()
 		db.session.commit()

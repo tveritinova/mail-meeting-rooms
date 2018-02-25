@@ -70,7 +70,7 @@ def get_rooms(user):
 
 def send_info_mail(to, event):
 	msg = Message(
-		"Подтверждение регистрации",
+		"Переговорная забронирована",
 		recipients=[to],
 		html=render_template('booking.html', 
 			room_name=Room.query.filter(Room.id == event.room_id).one().name,
@@ -143,9 +143,9 @@ def login():
 
 def send_email(to, confirm_url):
     msg = Message(
-        "Please confirm your email",
+        "Подтверждение регистрации",
         recipients=[to],
-        html="<a href="+confirm_url+">Confirm</a>",
+        html=render_template('confirm.html',url=confirm_url),
         sender=app.config['MAIL_DEFAULT_SENDER']
     )
     mail.send(msg)

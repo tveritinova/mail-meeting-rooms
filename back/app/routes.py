@@ -40,7 +40,8 @@ def verify_user(user):
 	return json.dumps({
 		'id': user.id, 
 		'first_name': user.first_name, 
-		'last_name': user.last_name
+		'last_name': user.last_name,
+		'is_admin': user.admin
 	}), 200
 
 @app.route('/')
@@ -137,6 +138,7 @@ def login():
 		'id': user.id, 
 		'first_name': user.first_name, 
 		'last_name': user.last_name,
+		'is_admin': user.admin,
 		'token': user.generate_auth_token()
 	}), 200
 

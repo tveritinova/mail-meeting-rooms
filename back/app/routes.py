@@ -35,10 +35,11 @@ def requires_auth(f):
 @cross_origin()
 @requires_auth
 def verify_user(user):
-	return {
+	return json.dumps({
 		'id': user.id, 
 		'first_name': user.first_name, 
-		'last_name': user.last_name}, 200
+		'last_name': user.last_name
+	}), 200
 
 @app.route('/')
 def index():

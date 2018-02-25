@@ -31,6 +31,15 @@ def requires_auth(f):
 	return decorated
 
 
+@app.route('/verify', methods=['GET'])
+@cross_origin()
+@requires_auth
+def verify_user(user):
+	return {
+		'id': user.id, 
+		'first_name': user.first_name, 
+		'last_name': user.last_name}, 200
+
 @app.route('/')
 def index():
 	return render_template('index.html')
@@ -54,12 +63,6 @@ def get_rooms(user):
 			} for event in room.events
 		]
 	} for room in Room.query.all()]), 200
-
-'''
-@app.route('/rooms', methods=['POST'])
-def post_rooms():
-	rooms = Room(name= , floor_num= )
-'''
 
 
 @app.route('/events', methods=['POST'])

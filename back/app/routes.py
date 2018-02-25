@@ -72,7 +72,7 @@ def send_info_mail(to, event):
 	msg = Message(
 		"Подтверждение регистрации",
 		recipients=[to],
-		html="Вы забронировали переговорную <b>"+Room.query.filter(Room.id == event.room_id).name+"</b><br/>"+\
+		html="Вы забронировали переговорную <b>"+Room.query.filter(Room.id == event.room_id).one().name+"</b><br/>"+\
 			"<b>Начало</b> "+str(event.begin)+"<br/>"+\
 			"<b>Конец</b> "+str(event.end)+"<br/>"+\
 			"<b>Название</b> "+str(event.title)+"<br/>"+\

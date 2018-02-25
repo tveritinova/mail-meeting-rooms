@@ -67,6 +67,8 @@ def post_rooms():
 def post_event():
 	data = json.loads(request.data)
 
+	print data
+
 	event = Event(
 			title=data['title'],
 			description=data['description'],

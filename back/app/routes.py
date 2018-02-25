@@ -70,14 +70,21 @@ def post_event(user):
 
 	print data
 
+	begin = parse(data['begin'])
+	end = parse(data['end'])
+
+	for event in Event.query.all():
+		if event.begin <= begin <= event.end or begin <= event.begin <= end:
+			return 'time unavailable', 400
+
 	event = Event(
-			title=data['title'],
-			description=data['description'],
-			begin=parse(data['begin']),
-			end=parse(data['end']),
-			room_id=data['room_id'],
-			user_id=user.id
-		)
+		title=data['title'],
+		description=data['description'],
+		begin=begin,
+		end=end,
+		room_id=data['room_id'],
+		user_id=user.id
+	)
 
 	db.session.add(event)
 	db.session.commit()

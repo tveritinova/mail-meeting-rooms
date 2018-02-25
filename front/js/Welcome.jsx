@@ -80,6 +80,7 @@ export default class Welcome extends React.Component {
 				color: 'white',
 				fontSize: '27pt'
 			}}>
+				<img src="url({{ url_for('static', filename='images/mail_wallpaper.jpg') }})" style="width: 100"/>
 				<div style={{
 					width: '45%',
 					marginRight: 50,

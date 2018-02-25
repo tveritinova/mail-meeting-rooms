@@ -17,7 +17,7 @@ export default class App extends React.Component {
     	password_again: '',
     	showEmailOverlay: false,
     	message: '',
-    	messageConfirm: true
+    	messageConfirm: false
     };
 
     this.register = this.register.bind(this);

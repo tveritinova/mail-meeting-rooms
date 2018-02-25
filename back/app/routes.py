@@ -21,12 +21,13 @@ def requires_auth(f):
 	@wraps(f)
 	def decorated(*args, **kwargs):
 		print request.headers['Authorization'].split(' ')
-		token= request.headers['Authorization'].split(' ')[1]
+		token = request.headers['Authorization'].split(' ')[1]
 		user = User.verify_auth_token(token)
 		
 		if user is None:
 			return 'not authorized', 401
-		return f(*args, **kwargs)
+
+		return f(user, *args, **kwargs)
 	return decorated
 
 
@@ -64,7 +65,7 @@ def post_rooms():
 @app.route('/events', methods=['POST'])
 @cross_origin()
 @requires_auth
-def post_event():
+def post_event(user):
 	data = json.loads(request.data)
 
 	print data

@@ -98,6 +98,7 @@ def delete_room(user, room_id):
 	if user.admin == True:
 		Room.query.filter(Room.id == room_id).delete()
 		db.session.commit()
+		return 'success', 200
 	else:
 		return 'user not admin', 403
 
@@ -115,6 +116,7 @@ def update_room(user):
 		room.name = data['name']
 		room.floor_num = data['floor_num']
 		db.session.commit()
+		return 'success', 200
 	else:
 		return 'user not admin', 403
 

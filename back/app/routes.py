@@ -29,7 +29,7 @@ def requires_auth(f):
 		if user is None:
 			return 'not authorized', 401
 
-		args.insert(1, user)
+		args = tuple(list(args).insert(1, user))
 
 		return f(*args, **kwargs)
 	return decorated

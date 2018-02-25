@@ -26,6 +26,7 @@ export default class Welcome extends React.Component {
 		    			response.data.first_name,
 						response.data.last_name,
 						response.data.id,
+						response.data.is_admin,
 						token);
 	    			this.setState({redirect: true});
 	    		}

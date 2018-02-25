@@ -259,6 +259,16 @@ export default class Home extends React.Component {
       	<div className={css(styles.mainContainer)}>
 
       		<div className={css(styles.left)}>
+            {this.props.user_is_admin &&
+              <div>
+                Изменить переговорные:
+                <div style={{display: 'flex', flexDirection: 'row'}}>
+                  <button>Добавить</button>
+                  <button>Удалить</button>
+                  <button>Изменить</button>
+                </div>
+              </div>
+            }
             {calendar && <Sticky>{calendar}</Sticky>}
           </div>
 

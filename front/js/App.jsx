@@ -19,6 +19,7 @@ export default class App extends React.Component {
 	    	user_first_name: '',
 	    	user_last_name: '',
 	    	user_id: '',
+	    	user_is_admin: false,
 	    	logged: false,
 	    	api: axios.create({
 				baseURL: 'http://34.216.197.100',
@@ -41,12 +42,13 @@ export default class App extends React.Component {
 			<HashRouter>
 				<Switch>
 					<Route exact path="/" render={() => <Welcome set_user={(
-						(first_name, last_name, id, token) => {
+						(first_name, last_name, id, is_admin, token) => {
 							this.state.api.defaults.headers.common['Authorization'] = 'Bearer '+token;
 							this.setState({
 								user_first_name: first_name,
 								user_last_name: last_name,
 								user_id: id,
+								user_is_admin: is_admin,
 								logged: true,
 							})
 						}).bind(this)}
@@ -62,6 +64,7 @@ export default class App extends React.Component {
 									user_last_name={this.state.user_last_name}
 									user_first_name={this.state.user_first_name}
 									user_id={this.state.user_id}
+									user_is_admin={this.state.user_is_admin}
 									api={this.state.api}
 								/>
 							:

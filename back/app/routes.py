@@ -29,9 +29,7 @@ def requires_auth(f):
 		if user is None:
 			return 'not authorized', 401
 
-		args += (user,)
-
-		return f(*args, **kwargs)
+		return f(user, *args, **kwargs)
 	return decorated
 
 
@@ -95,7 +93,7 @@ def post_rooms(user):
 @app.route('/rooms/<int:room_id>', methods=['DELETE'])
 @cross_origin()
 @requires_auth
-def delete_room(room_id, user):
+def delete_room(user, room_id):
 	print room_id, user
 	if user.admin == True:
 		Room.query.filter(Room.id == room_id).delete()

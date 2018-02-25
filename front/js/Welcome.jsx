@@ -73,7 +73,7 @@ export default class Welcome extends React.Component {
 
 		return (
 			<div style={{
-				background: "{{ url_for('static', filename='images/mail_wallpaper.jpg') }} no-repeat center center fixed", 
+				background: "url({{ url_for('static', filename='images/mail_wallpaper.jpg') }}) no-repeat center center fixed", 
 				backgroundSize: 'cover',
 				height: '100%',
 				fontFamily: 'Open Sans',

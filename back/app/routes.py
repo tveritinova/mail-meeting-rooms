@@ -44,6 +44,7 @@ def verify_user(user):
 		'is_admin': user.admin
 	}), 200
 
+
 @app.route('/')
 def index():
 	return render_template('index.html')
@@ -67,6 +68,52 @@ def get_rooms(user):
 			} for event in room.events
 		]
 	} for room in Room.query.all()]), 200
+
+
+@app.route('/rooms', methods=['POST'])
+@cross_origin()
+@requires_auth
+def post_rooms(user):
+	if user.admin == True:
+		data = json.loads(request.data)
+
+		room = Room(name=data["name"], floor_num=data["floor_num"])
+		db.session.add(room)
+		db.session.commit()
+	else:
+		return 'user not admin', 403
+
+	return '', 404
+
+
+@app.route('/rooms/<int:room_id>', methods=['DELETE'])
+@cross_origin()
+@requires_auth
+def delete_room(room_id, user):
+	if user.admin == True:
+		Room.query.filter(Room.id == room_id).delete()
+		db.session.commit()
+	else:
+		return 'user not admin', 403
+
+	return '', 404
+
+
+@app.route('/rooms/<int:room_id>', methods=['PUT'])
+@cross_origin()
+@requires_auth
+def update_room(user):
+	if user.admin == True:
+		data = json.loads(request.data)
+
+		room = Room.query.filter(Room.id == room_id).one()
+		room.name = data['name']
+		room.floor_num = data['floor_num']
+		db.session.commit()
+	else:
+		return 'user not admin', 403
+
+	return '', 404
 
 
 def send_info_mail(to, event):

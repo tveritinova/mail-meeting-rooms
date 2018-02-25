@@ -39,7 +39,7 @@ def index():
 @app.route('/rooms', methods=['GET'])
 @cross_origin()
 @requires_auth
-def get_rooms():
+def get_rooms(user):
 	return json.dumps([{
 		"id": room.id,
 		"name": room.name, 

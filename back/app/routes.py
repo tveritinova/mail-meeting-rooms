@@ -73,7 +73,7 @@ def post_event(user):
 	begin = parse(data['begin'])
 	end = parse(data['end'])
 
-	for event in Event.query.all():
+	for event in Event.query.filter(Event.room_id == data['room_id']).all():
 		if event.begin < begin < event.end or \
 		begin < event.begin < end or (event.begin == begin and event.end == end):
 			return 'time unavailable', 400

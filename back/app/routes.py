@@ -38,6 +38,7 @@ def index():
 
 
 @app.route('/rooms', methods=['GET'])
+@cross_origin()
 def get_rooms():
 	print request.headers
 

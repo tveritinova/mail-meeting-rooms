@@ -77,9 +77,13 @@ def post_rooms(user):
 	if user.admin == True:
 		data = json.loads(request.data)
 
+		if Room.query.filter(Room.name == data['name']).scalar() is not None:
+			return 'room already exists', 400
+
 		room = Room(name=data["name"], floor_num=data["floor_num"])
 		db.session.add(room)
 		db.session.commit()
+		return 'success', 200
 	else:
 		return 'user not admin', 403
 

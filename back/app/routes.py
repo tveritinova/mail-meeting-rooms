@@ -75,8 +75,7 @@ def post_event(user):
 
 	for event in Event.query.all():
 		if event.begin < begin < event.end or \
-		begin < event.begin < end or \
-		(event.begin == begin and event.end == end)
+		begin < event.begin < end or (event.begin == begin and event.end == end)
 			return 'time unavailable', 400
 
 	event = Event(

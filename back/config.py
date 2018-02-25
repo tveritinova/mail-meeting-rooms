@@ -8,6 +8,7 @@ class Config(object):
     SQLALCHEMY_DATABASE_URI = 'mysql://'+user+':'+password+'@localhost/app?charset=utf8'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     CORS_HEADERS = 'Content-Type'
+    CORS_SUPPORTS_CREDENTIALS = True
     DEBUG = True
     SECURITY_PASSWORD_SALT = 'my_precious_two'
 

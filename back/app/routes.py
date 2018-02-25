@@ -1,4 +1,4 @@
-# -*- coding: utf-6 -*-
+# -*- coding: utf-8 -*-
 
 from flask import render_template, request, url_for
 from app import app, db, mail

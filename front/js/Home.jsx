@@ -307,7 +307,7 @@ export default class Home extends React.Component {
                 <BookForm 
                   defaultTime={this.state.selected_time}
                   close={() => this.setState({book: false}).bind(this)}
-                  rooms={this.state.rooms.sort((a, b) => (+a.floor_num) - (+b.floor_num))}
+                  rooms={this.state.rooms}
                   api={this.props.api}
                   update_events={this.get_rooms}
                 />

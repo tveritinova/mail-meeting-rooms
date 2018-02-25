@@ -11,7 +11,7 @@ from flask.ext.mail import Message
 from sqlalchemy.orm.exc import NoResultFound
 from smtplib import SMTPRecipientsRefused
 from functools import wraps
-
+from dateutil.parser import parse
 
 
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -72,8 +72,8 @@ def post_event():
 	event = Event(
 			title=data['title'],
 			description=data['description'],
-			begin=datetime(data['begin']),
-			end=datetime(data['end']),
+			begin=parse(data['begin']),
+			end=parse(data['end']),
 			room_id=data['room_id'],
 			user_id=user.id
 		)

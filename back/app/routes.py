@@ -10,7 +10,7 @@ from datetime import datetime
 from passlib.hash import pbkdf2_sha256
 from token_ import generate_confirmation_token, confirm_token
 from flask.ext.mail import Message
-from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy.orm.exc import NoResultFound, IntegrityError
 from smtplib import SMTPRecipientsRefused
 from functools import wraps
 from dateutil.parser import parse
@@ -108,14 +108,17 @@ def delete_room(user, room_id):
 @app.route('/rooms/<int:room_id>', methods=['PUT'])
 @cross_origin()
 @requires_auth
-def update_room(user):
+def update_room(user, room_od):
 	if user.admin == True:
 		data = json.loads(request.data)
 
 		room = Room.query.filter(Room.id == room_id).one()
 		room.name = data['name']
 		room.floor_num = data['floor_num']
-		db.session.commit()
+		try:
+			db.session.commit()
+		except IntegrityError:
+			return 'room already exists', 400
 		return 'success', 200
 	else:
 		return 'user not admin', 403

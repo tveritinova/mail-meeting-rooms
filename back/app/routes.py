@@ -70,16 +70,16 @@ def get_rooms(user):
 
 def send_info_mail(to, event):
 	msg = Message(
-        "Подтверждение регистрации",
-        recipients=[to],
-        html="Вы забронировали переговорную <b>"+Room.query.filter(Room.id == event.room_id).name+"</b><br/>"+\
-        	"<b>Начало</b> "+str(event.begin)+"<br/>"+\
-        	"<b>Конец</b> "+str(event.end)+"<br/>"+\
-        	"<b>Название</b> "+str(event.title)+"<br/>"+\
-        	"<b>Описание</b> "+str(event.description),
-        sender=app.config['MAIL_DEFAULT_SENDER']
-    )
-    mail.send(msg)
+		"Подтверждение регистрации",
+		recipients=[to],
+		html="Вы забронировали переговорную <b>"+Room.query.filter(Room.id == event.room_id).name+"</b><br/>"+\
+			"<b>Начало</b> "+str(event.begin)+"<br/>"+\
+			"<b>Конец</b> "+str(event.end)+"<br/>"+\
+			"<b>Название</b> "+str(event.title)+"<br/>"+\
+			"<b>Описание</b> "+str(event.description),
+		sender=app.config['MAIL_DEFAULT_SENDER']
+	)
+	mail.send(msg)
 
 
 @app.route('/events', methods=['POST'])

@@ -9,6 +9,9 @@ import Sticky from 'react-sticky-el';
 import axios from 'axios';
 import 'whatwg-fetch';
 import {Redirect} from 'react-router-dom';
+import Add from "./change_rooms/Add";
+import Delete from "./change_rooms/Delete";
+import Edit from "./change_rooms/Edit";
 
 
 
@@ -30,7 +33,10 @@ export default class Home extends React.Component {
       book: false,
       showLogin: false,
       showRegister: false,
-      refresh: false
+      refresh: false,
+      admin_add: false,
+      admin_delete: false,
+      admin_update: false
     };
     this.handleChangeCheckbox = this.handleChangeCheckbox.bind(this);
     this.handleChangeTime = this.handleChangeTime.bind(this);
@@ -260,13 +266,26 @@ export default class Home extends React.Component {
 
       		<div className={css(styles.left)}>
             {this.props.user_is_admin &&
-              <div>
+              <div className={css(styles.calendarContainer)}>
                 Изменить переговорные:
                 <div style={{display: 'flex', flexDirection: 'row'}}>
-                  <button>Добавить</button>
-                  <button>Удалить</button>
-                  <button>Изменить</button>
+                  <button className={css(styles.button)}
+                    onClick={()=>this.setState({admin_add: true, admin_delete: false, admin_update: false})}>
+                    Добавить
+                  </button>
+                  <button className={css(styles.button)}
+                    onClick={()=>this.setState({admin_add: false, admin_delete: true, admin_update: false})}>
+                    Удалить
+                  </button>
+                  <button className={css(styles.button)}
+                    onClick={()=>this.setState({admin_add: false, admin_delete: false, admin_update: true})}>
+                    Изменить
+                  </button>
                 </div>
+                
+                {this.state.admin_add && <Add api={this.props.api}/>}
+                {this.state.admin_delete && <Delete api={this.props.api} rooms={this.state.rooms}/>}
+                {this.state.admin_update && <Edit api={this.props.api} rooms={this.state.rooms}/>}
               </div>
             }
             {calendar && <Sticky>{calendar}</Sticky>}
@@ -435,11 +454,19 @@ const styles = StyleSheet.create({
   	marginRight: 'auto',
   	marginTop: 20,
   	marginBottom: 20,
-  	width: 84, 
+  	width: 75, 
   	border: '1px solid #DDDDDD',
   	borderRadius: '5px',
   },
-  
+  button: {
+    marginLeft: 5, 
+    marginRight: 5,
+    marginTop: 20,
+    marginBottom: 20,
+    width: 75, 
+    border: '1px solid #DDDDDD',
+    borderRadius: '5px',
+  },
   calendarContainer: {
     display: 'flex', 
     flexDirection: 'column', 

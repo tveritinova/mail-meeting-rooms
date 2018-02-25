@@ -1,3 +1,5 @@
+# -*- coding: utf-6 -*-
+
 from flask import render_template, request, url_for
 from app import app, db, mail
 from app.models import User, Room, Event
@@ -68,9 +70,9 @@ def get_rooms(user):
 
 def send_info_mail(to, event):
 	msg = Message(
-        u'Подтверждение регистрации',
+        "Подтверждение регистрации",
         recipients=[to],
-        html=u'Вы забронировали переговорную <b>'+Room.query.filter(Room.id == event.room_id).name+"</b><br/>"+\
+        html="Вы забронировали переговорную <b>"+Room.query.filter(Room.id == event.room_id).name+"</b><br/>"+\
         	"<b>Начало</b> "+str(event.begin)+"<br/>"+\
         	"<b>Конец</b> "+str(event.end)+"<br/>"+\
         	"<b>Название</b> "+str(event.title)+"<br/>"+\

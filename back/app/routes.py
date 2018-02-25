@@ -66,6 +66,20 @@ def get_rooms(user):
 	} for room in Room.query.all()]), 200
 
 
+def send_info_mail(to, event):
+	msg = Message(
+        "Подтверждение регистрации",
+        recipients=[to],
+        html="Вы забронировали переговорную <b>"+Room.query.filter(Room.id == event.room_id).name+"</b><br/>"+\
+        	"<b>Начало</b> "+str(event.begin)+"<br/>"+\
+        	"<b>Конец</b> "+str(event.end)+"<br/>"+\
+        	"<b>Название</b> "+str(event.title)+"<br/>"+\
+        	"<b>Описание</b> "+str(event.description)
+        sender=app.config['MAIL_DEFAULT_SENDER']
+    )
+    mail.send(msg)
+
+
 @app.route('/events', methods=['POST'])
 @cross_origin()
 @requires_auth
@@ -94,6 +108,8 @@ def post_event(user):
 	db.session.add(event)
 	db.session.commit()
 
+	send_info_mail(user.email, event)
+
 	return 'success', 201
 
 
@@ -119,6 +135,7 @@ def login():
 		'last_name': user.last_name,
 		'token': user.generate_auth_token()
 	}), 200
+
 
 def send_email(to, confirm_url):
     msg = Message(

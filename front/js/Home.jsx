@@ -19,7 +19,6 @@ BigCalendar.setLocalizer(BigCalendar.momentLocalizer(moment))
 
 
 var Datetime = require('react-datetime');
-const utf8 = require('utf8');
 
 export default class Home extends React.Component {
 

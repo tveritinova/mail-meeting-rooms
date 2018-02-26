@@ -68,7 +68,8 @@ def get_rooms(user):
 				"user_id": event.user_id
 			} for event in room.events
 		]
-	} for room in Room.query.all()]), 
+	} for room in Room.query.all()])
+	print json_data
 	return Response(json_data,200, content_type='application/json; charset=utf-8')
 
 

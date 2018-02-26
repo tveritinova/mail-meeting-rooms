@@ -109,7 +109,7 @@ def delete_room(user, room_id):
 @app.route('/rooms/<int:room_id>', methods=['PUT'])
 @cross_origin()
 @requires_auth
-def update_room(user, room_od):
+def update_room(user, room_id):
 	if user.admin == True:
 		data = json.loads(request.data)
 

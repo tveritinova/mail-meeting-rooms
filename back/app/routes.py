@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from flask import render_template, request, url_for
+from flask import render_template, request, url_for,redirect
 from app import app, db, mail
 from app.models import User, Room, Event
 import os
@@ -251,6 +251,6 @@ def confirm(token):
 	    user.confirmed_on = datetime.now()
 	    db.session.commit()
 
-    return 'confirmed', 200
+    return redirect("http://34.216.197.100/", code=302)
 
 

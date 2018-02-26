@@ -25,7 +25,6 @@ export default class App extends React.Component {
 
   register() {
 
-  	console.log("register");
 
   	if (this.state.email === '') {
   		this.setState({message: "Необходимо ввести почту"});
@@ -65,7 +64,6 @@ export default class App extends React.Component {
     		password: this.state.password
 	}))
 	.then((function (response) {
-		console.log(response);
 
 		if (response.status === 201) {
 			if (response.data === "user created") {
@@ -75,7 +73,6 @@ export default class App extends React.Component {
 
 	}).bind(this))
 	.catch((function (error) {
-		console.log(error);
 
 		if (error.response.status === 400) {
 			if (error.response.data === "user already exists") {

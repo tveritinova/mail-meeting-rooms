@@ -8,28 +8,31 @@ export default class Delete extends React.Component {
     	super(props);
     	this.state = {
     		room: this.props.rooms[0].id,
-    		message: ''
+    		message: '',
+    		close: false
     	}
 
     	this.call_api = this.call_api.bind(this);
     }
 
 	call_api() {
-		console.log('to delete', this.state.room);
 		this.props.api.delete('/rooms/'+this.state.room)
 		.then(((response) => {
-			console.log(response);
 
 			if (response.status == 200) {
-				this.setState({message: "Удалено"})
+				this.setState({message: "Удалено", close: true})
 			}
 		}).bind(this))
 		.catch((error) => {
-			console.log(error);
 		})
 	}
 
 	render() {
+
+		if (this.state.close) {
+    		setTimeout(this.props.close, 1000);
+    	}
+
 		return (
 			<div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
 				<select onChange={(event) => this.setState({room: event.target.value})} 

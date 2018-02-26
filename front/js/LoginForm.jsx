@@ -31,12 +31,9 @@ export default class LoginForm extends React.Component {
     		password: this.state.password
 		}))
 		.then((function (response) {
-	    	console.log(response);
 
-	    	console.log('func', this.props.set_user);
 
 			if (response.status == 200) {
-				console.log(response.data);
 				this.props.set_user(
 					response.data.first_name,
 					response.data.last_name,
@@ -51,7 +48,6 @@ export default class LoginForm extends React.Component {
 			}
 	    }).bind(this))
 		.catch((function (error) {
-			console.log(error.response);
 
 			if (error.response.status === 401) {
 				if (error.response.data === "wrong password") {

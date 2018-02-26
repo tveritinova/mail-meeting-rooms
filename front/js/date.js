@@ -1,6 +1,5 @@
 
 export const two_digit = (num) => {
-	console.log('num', num);
 	return ("0" + num).slice(-2);
 }
 
@@ -26,6 +25,5 @@ export const get_string_date = (time, cur) => {
 export const get_string = (time) => {
 	var res = time.getFullYear() + '-' + two_digit(time.getMonth()+1) + '-' + two_digit(time.getDate()) +
 		' ' + two_digit(time.getHours())+':'+two_digit(time.getMinutes())+':'+two_digit(time.getSeconds())
-	console.log(res);
 	return res;
 }

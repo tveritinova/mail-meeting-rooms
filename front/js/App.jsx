@@ -13,8 +13,6 @@ export default class App extends React.Component {
 	constructor(props) {
 		super(props);
 
-    	console.log(localStorage.getItem('token_auth'));
-
 	    this.state = {
 	    	user_first_name: '',
 	    	user_last_name: '',

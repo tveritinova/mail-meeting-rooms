@@ -9,7 +9,8 @@ export default class Add extends React.Component {
     	this.state = {
     		name: '',
     		floor_num: undefined,
-    		message: ''
+    		message: '',
+    		close: false
     	}
 
     	this.call_api = this.call_api.bind(this);
@@ -34,14 +35,12 @@ export default class Add extends React.Component {
 				floor_num: this.state.floor_num
 			}))
 		.then(((response) => {
-			console.log(response);
 
 			if (response.status === 201) {
-				this.setState({message: "Переговорная создана"})
+				this.setState({message: "Переговорная создана", close: true})
 			}
 		}).bind(this))
 		.catch((error) => {
-			console.log(error);
 
 			if (error.response.status === 400) {
 				if (error.response.data === 'room already exists') {
@@ -52,6 +51,11 @@ export default class Add extends React.Component {
 	}
 
 	render() {
+
+		if (this.state.close) {
+    		setTimeout(this.props.close, 1000);
+    	}
+
 		return (
 			<div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
 				<input 

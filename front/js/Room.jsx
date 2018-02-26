@@ -5,8 +5,6 @@ import {get_string_date} from "./date";
 export default class Room extends React.Component {
 
   found_next_free(events, ind) {
-  	//console.log("found_next_free");
-  	//console.log(events, ind);
   	
   	for (var i = ind + 1; i < events.length; i++) {
   		if (events[i-1].end.getTime() !== events[i].start.getTime()) {
@@ -18,14 +16,11 @@ export default class Room extends React.Component {
   }
 
   render () {
-    console.log('room', this.props.name);
 
 
   	var cur = this.props.current;
   	var sorted_events = this.props.events;
 
-  	console.log('cur', cur);
-  	console.log('events', sorted_events);
 
   	var found;
   	for (var i = 0; i < sorted_events.length; i++) {
@@ -39,7 +34,6 @@ export default class Room extends React.Component {
   	var next_time_free;
   	var next_time_closed
 
-  	console.log('found', found);
 
   	if (found === undefined) {
 
@@ -56,11 +50,9 @@ export default class Room extends React.Component {
       }
 
   	} else {
-  		//console.log(cur, sorted_events[found]['start'], cur == sorted_events[found]['start']);
   		if (cur.getTime() === sorted_events[found].start.getTime()) {
   			is_free = false;
   			next_time_free = this.found_next_free(sorted_events, found);
-  			//console.log("eq start");
   		} else {
   			//console.assert(cur < sorted_events[found]['start']);
 
@@ -69,14 +61,11 @@ export default class Room extends React.Component {
   				next_time_closed = sorted_events[found].start;
   			} else {
   				is_free = false;
-          console.log("here");
   				next_time_free = sorted_events[found-1].end;
   			}
   		}
   	}
 
-  	//console.log("next_time_closed", next_time_closed);
-  	//console.log("next_time_free",next_time_free);
 
   	var status;
   	var time;

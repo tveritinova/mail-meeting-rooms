@@ -46,7 +46,6 @@ export default class Home extends React.Component {
   get_rooms() {
     this.props.api.get('/rooms')
     .then(((response) => {
-      console.log(response);
 
       this.setState({
         rooms: response.data.map((room) => {
@@ -60,14 +59,11 @@ export default class Home extends React.Component {
         })
       },
       function () {
-        console.log('set state callback');
-        console.log(this.state.rooms);
         this.get_floors();
       });
 
     }).bind(this))
     .catch((error) => {
-      console.log(error);
     })
   }
 
@@ -109,7 +105,6 @@ export default class Home extends React.Component {
   }
 
   handleChangeTime(moment) {
-  	console.log(moment);
 
   	try {
   		var date = moment.toDate();
@@ -122,16 +117,13 @@ export default class Home extends React.Component {
   }
 
   handleRoomClick(room) {
-  	console.log('this', this);
   	this.setState({
   		selected_room: room
   	});
   }
 
   get_events(room_id) {
-    console.log(this.state.rooms, room_id);
     if (this.state.rooms) {
-      console.log(this.state.rooms.filter((room) => room.id === room_id)[0].events);
       return this.state.rooms.filter((room) => room.id === room_id)[0].events;
     }
   }
@@ -178,16 +170,12 @@ export default class Home extends React.Component {
   };
 
   render () {
-  	console.log(this.state.selected_now);
   	var current;
   	if (this.state.selected_now){
   		current = new Date();
   	} else {
   		current = this.state.selected_time;
   	}
-
-  	console.log('selected_time', this.state.selected_time);
-  	console.log('selected_room', this.state.selected_room);
 
     if (!this.state.selected_now) {
       var datePicker = 
@@ -228,7 +216,6 @@ export default class Home extends React.Component {
         </div> 
     }
 
-    console.log('first_name', this.props.first_name)
 
     if (this.state.refresh) {
       return (<Redirect to="/"/>)
@@ -251,7 +238,6 @@ export default class Home extends React.Component {
             <button
               className={css(styles.logoutButton)}
               onClick={() => {
-                console.log("click");
                 localStorage.removeItem('token_auth');
                 this.setState({refresh: true});
               }}
@@ -283,9 +269,9 @@ export default class Home extends React.Component {
                   </button>
                 </div>
                 
-                {this.state.admin_add && <Add api={this.props.api}/>}
-                {this.state.admin_delete && <Delete api={this.props.api} rooms={this.state.rooms}/>}
-                {this.state.admin_update && <Edit api={this.props.api} rooms={this.state.rooms}/>}
+                {this.state.admin_add && <Add api={this.props.api} close={()=>this.setState({admin_add: false})}/>}
+                {this.state.admin_delete && <Delete api={this.props.api} rooms={this.state.rooms} close={()=>this.setState({admin_delete: false})}/>}
+                {this.state.admin_update && <Edit api={this.props.api} rooms={this.state.rooms} close={()=>this.setState({admin_update: false})}/>}
               </div>
             }
             {calendar && <Sticky>{calendar}</Sticky>}

@@ -30,13 +30,10 @@ export default class BookForm extends React.Component {
     }
 
     handleSelection(event) {
-    	console.log(event.target.value);
     	this.setState({room: event.target.value});
     }
 
     handleSubmit(event) {
-
-    	console.log(this.state.room);
 
     	if (this.state.title === '') {
     		this.setState({message: 'Необходимо задать название'});
@@ -44,7 +41,6 @@ export default class BookForm extends React.Component {
     	}
 
     	if (this.state.startTime >= this.state.endTime) {
-    		console.log("wrong time");
     		this.setState({message: 'Время задано неверно'});
     		return;
     	}
@@ -58,7 +54,6 @@ export default class BookForm extends React.Component {
     			room_id: this.state.room
     		}))
     	.then(((response) => {
-    		console.log(response);
 
     		if (response.status === 201) {
     			this.props.update_events();
@@ -66,7 +61,6 @@ export default class BookForm extends React.Component {
     		}
     	}).bind(this))
     	.catch(((error) => {
-    		console.log(error);
 
     		if (error.response.status === 400) {
     			if (error.response.data === "time unavailable") {
@@ -78,7 +72,6 @@ export default class BookForm extends React.Component {
 
 	handleChangeTime(num, moment) {
 
-		console.log(moment);
 
 	  	try {
 	  		var date = moment.toDate();
@@ -104,20 +97,8 @@ export default class BookForm extends React.Component {
     render() {
 
     	if (this.state.successBooked) {
-    		/*setTimeout(() => this.setState({
-    			successBooked: false,
-    			message: '', title: '', description: '',
-    			startTime: this.props.defaultTime,
-    			endTime: this.props.defaultTime,
-    			room: this.props.rooms[0].id
-    		}), 3000);*/
     		setTimeout(this.props.close, 3000);
     	}
-
-    	console.log(111);
-    	console.log(this.props.rooms);
-    	console.log(this.state.room);
-    	console.log(this.props.rooms.filter((room) => room.id == this.state.room));
 
     	return (
     	<div >

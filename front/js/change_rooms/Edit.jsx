@@ -11,7 +11,8 @@ export default class Edit extends React.Component {
     		room: this.props.rooms[0].id,
     		message: '',
     		name: '',
-    		floor_num: undefined
+    		floor_num: undefined,
+    		close: false
     	}
 
     	this.call_api = this.call_api.bind(this);
@@ -31,14 +32,12 @@ export default class Edit extends React.Component {
 			})
 		)
 		.then(((response) => {
-			console.log(response);
 
 			if (response.status == 200) {
-				this.setState({message: "Успешно измненено"})
+				this.setState({message: "Успешно измненено", close: true})
 			}
 		}).bind(this))
 		.catch(((error) => {
-			console.log(error);
 
 			if (error.response.status == 400) {
 				if (error.response.data === 'room already exists'){
@@ -49,6 +48,12 @@ export default class Edit extends React.Component {
 	}
 
 	render() {
+
+		if (this.state.close) {
+    		setTimeout(this.props.close, 1000);
+    	}
+
+
 		return (
 			<div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
 				<select onChange={(event) => this.setState({room: event.target.value})} 

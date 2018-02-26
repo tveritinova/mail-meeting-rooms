@@ -55,8 +55,7 @@ def index():
 @cross_origin()
 @requires_auth
 def get_rooms(user):
-	return Response(
-	json.dumps([{
+	json_data = json.dumps([{
 		"id": room.id,
 		"name": room.name, 
 		"floor_num": room.floor_num,
@@ -69,7 +68,8 @@ def get_rooms(user):
 				"user_id": event.user_id
 			} for event in room.events
 		]
-	} for room in Room.query.all()]), 200, content_type='application/json; charset=utf-8')
+	} for room in Room.query.all()]), 
+	return Response(json_data,200, content_type='application/json; charset=utf-8')
 
 
 @app.route('/rooms', methods=['POST'])

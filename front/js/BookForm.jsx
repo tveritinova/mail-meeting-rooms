@@ -106,7 +106,7 @@ export default class BookForm extends React.Component {
     		{this.state.successBooked ? 
 
     		<div style={{color: 'green', fontSize: '12pt', textAlign:'center'}}>
-    			<b>Переговорная {this.props.rooms.filter((room) => room.id == this.state.room)[0].name} успешно забронировано
+    			<b>Переговорная {this.props.rooms.filter((room) => room.id == this.state.room)[0].name} успешно забронирована
     			</b>
     		</div>
 

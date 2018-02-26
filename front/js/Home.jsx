@@ -19,6 +19,7 @@ BigCalendar.setLocalizer(BigCalendar.momentLocalizer(moment))
 
 
 var Datetime = require('react-datetime');
+const utf8 = require('utf8');
 
 export default class Home extends React.Component {
 
@@ -50,10 +51,10 @@ export default class Home extends React.Component {
       this.setState({
         rooms: response.data.map((room) => {
           room.events = room.events.map((event) => {return{
-            start: new Date(event.begin),
-            end: new Date(event.end),
-            title: room.title,
-            desc: room.description
+            start: new Date(event.begin.replace(/-/g, "/")),
+            end: new Date(event.end.replace(/-/g, "/")),
+            title: event.title,
+            desc: event.description
           }}).sort((a,b) => a.start.getTime() >= b.start.getTime())
           return room
         })
@@ -170,6 +171,7 @@ export default class Home extends React.Component {
   };
 
   render () {
+
   	var current;
   	if (this.state.selected_now){
   		current = new Date();
